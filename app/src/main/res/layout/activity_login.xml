@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.luissilva.whatsappclone.activity.LoginActivity"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/ivLogoApp"
+        android:layout_width="@dimen/width_logo"
+        android:layout_height="@dimen/height_logo"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/space_top_logo"/>
+
+    <EditText
+        android:id="@+id/edtUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/userName"
+        android:layout_marginTop="@dimen/space_top_logo"
+        android:layout_marginBottom="@dimen/space_between_components"
+        android:layout_below="@id/ivLogoApp"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/white"
+        android:paddingLeft="@dimen/space_between_components"/>
+
+    <EditText
+        android:id="@+id/edtFoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/foneNumber"
+        android:layout_below="@id/edtUserName"
+        android:textColorHint="@android:color/white"
+        android:textColor="@color/textColorPrimary"
+        android:paddingLeft="@dimen/space_between_components"/>
+
+    <Button
+        android:id="@+id/btnCadastrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorPrimary"
+        android:text="@string/cadastrar"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="@dimen/space_between_components"
+        android:layout_below="@id/edtFoneNumber"/>
+
+
+</RelativeLayout>
