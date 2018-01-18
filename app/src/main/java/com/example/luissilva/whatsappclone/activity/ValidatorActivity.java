@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.luissilva.whatsappclone.R;
 
-public class ValidadorActivity extends AppCompatActivity {
+public class ValidatorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
