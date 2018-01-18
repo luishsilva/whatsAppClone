@@ -2,17 +2,15 @@ package com.example.luissilva.whatsappclone.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.luissilva.whatsappclone.R;
-import com.example.luissilva.whatsappclone.helper.Preferences;
+import com.example.luissilva.whatsappclone.helper.PreferencesHelper;
+import com.example.luissilva.whatsappclone.helper.SMSHelper;
 import com.example.luissilva.whatsappclone.utils.NumberUtils;
 import com.example.luissilva.whatsappclone.utils.StringUtils;
-
-import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,12 +38,16 @@ public class LoginActivity extends AppCompatActivity {
                 phoneWithOutString = phoneWithOutString.replaceAll("[^a-zZ-Z1-9 ]", "");
                 String token =  String.valueOf(NumberUtils.randomNumber());
 
-                Preferences preferences = new Preferences(LoginActivity.this);
+                PreferencesHelper preferences = new PreferencesHelper(LoginActivity.this);
                 preferences.saveUserPreferences(userName,phoneWithOutString,token);
 
-                HashMap<String,String> userData = preferences.getUserData();
+                // Envio do SMS
+                SMSHelper smsHelper = new SMSHelper(phoneWithOutString,getString(R.string.sms_message));
+                boolean returnSendSMS = smsHelper.sendSMS();
 
-                Log.d("TOKEN",userData.get("name")+" - "+userData.get("phone")+" - "+userData.get("token"));
+                //HashMap<String,String> userData = preferences.getUserData();
+
+                //Log.d("TOKEN",userData.get("name")+" - "+userData.get("phone")+" - "+userData.get("token"));
 
             }
         });

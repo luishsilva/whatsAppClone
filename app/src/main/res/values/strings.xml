@@ -8,4 +8,5 @@
     <string name="code">Digite o código</string>
     <string name="validate">Validar</string>
     <string name="codCountry">+55</string>
+    <string name="sms_message">WhatsAppClone código de confirmação</string>
 </resources>

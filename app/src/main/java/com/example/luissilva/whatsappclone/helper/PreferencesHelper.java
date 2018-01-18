@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Created by luishsilva on 18/01/18.
  */
 
-public class Preferences {
+public class PreferencesHelper {
 
     private Context mContext;
     private SharedPreferences mSharedPreferences;
@@ -22,7 +22,7 @@ public class Preferences {
     private String KEY_USER_PHONE = "phone";
     private String KEY_USER_TOKEN = "token";
 
-    public Preferences(Context pContext) {
+    public PreferencesHelper(Context pContext) {
         this.mContext = pContext;
         this.mSharedPreferences = mContext.getSharedPreferences(SHARED_PREFERENCES_FILE_NAME,MODE);
         mSharedEditor = mSharedPreferences.edit();
