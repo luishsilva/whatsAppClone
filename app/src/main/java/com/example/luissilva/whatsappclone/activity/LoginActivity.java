@@ -1,17 +1,18 @@
 package com.example.luissilva.whatsappclone.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.luissilva.whatsappclone.R;
+import com.example.luissilva.whatsappclone.helper.Preferences;
 import com.example.luissilva.whatsappclone.utils.NumberUtils;
 import com.example.luissilva.whatsappclone.utils.StringUtils;
-import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,12 +34,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String userName = edtUserName.getText().toString();
-                String telefoneWithOnlyString = edtCodCountry.getText().toString()+""+
+                String phoneWithOutString = edtCodCountry.getText().toString()+""+
                         edtFoneNumber.getText().toString();
 
-                telefoneWithOnlyString = telefoneWithOnlyString.replaceAll("[^a-zZ-Z1-9 ]", "");
+                phoneWithOutString = phoneWithOutString.replaceAll("[^a-zZ-Z1-9 ]", "");
                 String token =  String.valueOf(NumberUtils.randomNumber());
-                Log.d("TOKEN",token);
+
+                Preferences preferences = new Preferences(LoginActivity.this);
+                preferences.saveUserPreferences(userName,phoneWithOutString,token);
+
+                HashMap<String,String> userData = preferences.getUserData();
+
+                Log.d("TOKEN",userData.get("name")+" - "+userData.get("phone")+" - "+userData.get("token"));
 
             }
         });
