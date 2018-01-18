@@ -25,27 +25,44 @@
         android:layout_below="@id/ivLogoApp"
         android:textColorHint="@android:color/white"
         android:textColor="@android:color/white"
-        android:paddingLeft="@dimen/space_between_components"/>
+        android:paddingLeft="@dimen/space_between_components"
+        android:layout_margin="@dimen/space_between_components"/>
+
+    <EditText
+        android:id="@+id/edtCodCountry"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/codCountry"
+        android:layout_below="@id/edtUserName"
+        android:textColorHint="@android:color/white"
+        android:textColor="@color/textColorPrimary"
+        android:paddingLeft="@dimen/space_between_components"
+        android:layout_margin="@dimen/space_between_components"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/edtFoneNumber"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:hint="@string/foneNumber"
         android:layout_below="@id/edtUserName"
         android:textColorHint="@android:color/white"
         android:textColor="@color/textColorPrimary"
-        android:paddingLeft="@dimen/space_between_components"/>
+        android:paddingLeft="@dimen/space_between_components"
+        android:layout_margin="@dimen/space_between_components"
+        android:layout_alignParentRight="true"
+        android:inputType="number"/>
 
     <Button
-        android:id="@+id/btnCadastrar"
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/textColorPrimary"
         android:text="@string/cadastrar"
         android:background="@color/colorPrimaryDark"
         android:layout_marginTop="@dimen/space_between_components"
-        android:layout_below="@id/edtFoneNumber"/>
+        android:layout_below="@id/edtFoneNumber"
+        android:layout_margin="@dimen/space_between_components"/>
 
 
 </RelativeLayout>
