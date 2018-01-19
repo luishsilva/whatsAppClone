@@ -15,4 +15,8 @@
     <string name="sms_not_sended">SMS não enviado</string>
     <string name="token_valid">Token validado</string>
     <string name="token_not_valid">Token não validado</string>
+    <string name="loginText">Login</string>
+    <string name="no_account">Não tem conta? Cadastre-se</string>
+    <string name="userPassword">Password</string>
+    <string name="textRegister">Cadastrar</string>
 </resources>

@@ -3,7 +3,7 @@
     <dimen name="width_logo">200dp</dimen>
     <dimen name="height_logo">163dp</dimen>
     <dimen name="space_top_logo">50dp</dimen>
-    <dimen name="space_between_components">20dp</dimen>
+    <dimen name="space_between_components">10dp</dimen>
 
     <dimen name="title_screem">30sp</dimen>
     <dimen name="code_size">20sp</dimen>
