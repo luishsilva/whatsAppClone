@@ -9,4 +9,7 @@
     <string name="validate">Validar</string>
     <string name="codCountry">+55</string>
     <string name="sms_message">WhatsAppClone código de confirmação</string>
+    <string name="title_alert_dialog_permission">Pernission denied</string>
+    <string name="msg_alert_dialog_permission">For use this APP you need grant the permissions</string>
+    <string name="btn_confirm_dialog_permission">CONFIRMAR</string>
 </resources>

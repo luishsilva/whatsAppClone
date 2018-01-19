@@ -1,5 +1,6 @@
 package com.example.luissilva.whatsappclone.helper;
 
+import android.content.Context;
 import android.telephony.SmsManager;
 
 /**
@@ -8,12 +9,14 @@ import android.telephony.SmsManager;
 
 public class SMSHelper {
 
+    private Context mContext;
     private static String phoneNumber;
     private static String mensage;
 
-    public SMSHelper(String pPhoneNumber, String pMessage) {
-        this.phoneNumber = pPhoneNumber;
+    public SMSHelper(Context pContext,String pPhoneNumber, String pMessage) {
+        this.phoneNumber = "+"+pPhoneNumber;
         this.mensage = pMessage;
+        this.mContext = pContext;
     }
 
     public static boolean sendSMS(){
@@ -27,5 +30,4 @@ public class SMSHelper {
             return false;
         }
     }
-
 }

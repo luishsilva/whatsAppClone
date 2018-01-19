@@ -1,12 +1,16 @@
 package com.example.luissilva.whatsappclone.activity;
 
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.luissilva.whatsappclone.R;
+import com.example.luissilva.whatsappclone.helper.PermissionHelper;
 import com.example.luissilva.whatsappclone.helper.PreferencesHelper;
 import com.example.luissilva.whatsappclone.helper.SMSHelper;
 import com.example.luissilva.whatsappclone.utils.NumberUtils;
@@ -18,6 +22,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // validate android permission
+        PermissionHelper.validatePermission(this,1);
 
         final EditText edtUserName = findViewById(R.id.edtUserName);
         final EditText edtCodCountry = findViewById(R.id.edtCodCountry);
@@ -42,13 +49,36 @@ public class LoginActivity extends AppCompatActivity {
                 preferences.saveUserPreferences(userName,phoneWithOutString,token);
 
                 // Envio do SMS
-                SMSHelper smsHelper = new SMSHelper(phoneWithOutString,getString(R.string.sms_message));
+                SMSHelper smsHelper = new SMSHelper(getApplicationContext(),phoneWithOutString,getString(R.string.sms_message)+" "+token);
                 boolean returnSendSMS = smsHelper.sendSMS();
 
                 //HashMap<String,String> userData = preferences.getUserData();
 
                 //Log.d("TOKEN",userData.get("name")+" - "+userData.get("phone")+" - "+userData.get("token"));
 
+            }
+        });
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults ){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for (int result : grantResults){
+            if (result == PackageManager.PERMISSION_DENIED){
+                alertPermissaoDenied();
+            }
+        }
+    }
+
+    private void alertPermissaoDenied() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.title_alert_dialog_permission));
+        builder.setMessage(getString(R.string.msg_alert_dialog_permission));
+
+        builder.setPositiveButton(getString(R.string.btn_confirm_dialog_permission), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
             }
         });
 
