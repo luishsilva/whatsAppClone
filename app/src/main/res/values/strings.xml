@@ -12,4 +12,7 @@
     <string name="title_alert_dialog_permission">Pernission denied</string>
     <string name="msg_alert_dialog_permission">For use this APP you need grant the permissions</string>
     <string name="btn_confirm_dialog_permission">CONFIRMAR</string>
+    <string name="sms_not_sended">SMS não enviado</string>
+    <string name="token_valid">Token validado</string>
+    <string name="token_not_valid">Token não validado</string>
 </resources>

@@ -26,7 +26,8 @@
         android:textColorHint="@android:color/white"
         android:textColor="@android:color/white"
         android:paddingLeft="@dimen/space_between_components"
-        android:layout_margin="@dimen/space_between_components"/>
+        android:layout_margin="@dimen/space_between_components"
+        android:text="Luis Henrique"/>
 
     <EditText
         android:id="@+id/edtCodCountry"
@@ -38,7 +39,8 @@
         android:textColor="@color/textColorPrimary"
         android:paddingLeft="@dimen/space_between_components"
         android:layout_margin="@dimen/space_between_components"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:text="+55"/>
 
     <EditText
         android:id="@+id/edtFoneNumber"
@@ -51,7 +53,8 @@
         android:paddingLeft="@dimen/space_between_components"
         android:layout_margin="@dimen/space_between_components"
         android:layout_alignParentRight="true"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:text="15981273383"/>
 
     <Button
         android:id="@+id/btnRegister"

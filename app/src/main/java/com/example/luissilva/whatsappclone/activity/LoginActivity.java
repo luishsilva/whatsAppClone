@@ -1,6 +1,7 @@
 package com.example.luissilva.whatsappclone.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.luissilva.whatsappclone.R;
 import com.example.luissilva.whatsappclone.helper.PermissionHelper;
@@ -51,6 +53,14 @@ public class LoginActivity extends AppCompatActivity {
                 // Envio do SMS
                 SMSHelper smsHelper = new SMSHelper(getApplicationContext(),phoneWithOutString,getString(R.string.sms_message)+" "+token);
                 boolean returnSendSMS = smsHelper.sendSMS();
+
+                if (returnSendSMS){
+                    Intent intent = new Intent(LoginActivity.this, ValidatorActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Toast.makeText(LoginActivity.this, StringUtils.getStringResourceId(getBaseContext(),R.string.sms_not_sended) , Toast.LENGTH_SHORT).show();
+                }
 
                 //HashMap<String,String> userData = preferences.getUserData();
 
