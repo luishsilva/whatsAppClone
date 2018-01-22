@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "119452087141-m8anlbfa7qpsnhon83ib70fp0db0q760.apps.googleusercontent.com",
+          "client_id": "119452087141-1q21por9dq8q6rh8pp8vhae9b8ak8kmb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.luissilva.whatsappclone",
-            "certificate_hash": "5591fed1db04effc9686d5a2fb4e354b7f1b6e7d"
+            "certificate_hash": "16aba2d7b15b2070ae2bb4b795a4865fd463ca71"
           }
         },
         {
