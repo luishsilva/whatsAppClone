@@ -29,4 +29,9 @@ public class DataBaseConfig {
         return authentication;
     }
 
+    public static void signOut(){
+        authentication = FirebaseAuth.getInstance();
+        authentication.signOut();
+    }
+
 }
