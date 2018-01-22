@@ -29,7 +29,7 @@
         android:text="Luis Henrique"/>
 
     <EditText
-        android:id="@+id/edEmail"
+        android:id="@+id/edtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/userName"
@@ -41,7 +41,7 @@
         android:text="luizhrick@gmail.com"/>
 
     <EditText
-        android:id="@+id/edPassword"
+        android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/userPassword"
