@@ -29,4 +29,9 @@ public class PresenterUser {
         DatabaseReference databaseReference = DataBaseConfig.getDataBaseReference();
         return databaseReference.child("user").child(pUser.getId()).setValue(pUser);
     }
+
+    public static Task<AuthResult> validateUserAuth(User pUser){
+        mAuth = DataBaseConfig.getAuthentication();
+        return mAuth.signInWithEmailAndPassword(pUser.getEmail(), pUser.getPass());
+    }
 }

@@ -9,14 +9,11 @@ import android.widget.Toast;
 
 public class MessagesUtils {
 
-    private static Context mContext;
-
-    public MessagesUtils(Context pContext) {
-        this.mContext = pContext;
+    public MessagesUtils() {
     }
 
-    public static void toastMsg(String msg){
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    public static void toastMsg(Context pContext, String msg){
+        Toast.makeText(pContext, msg, Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.luissilva.whatsappclone.R;
+import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
 import com.example.luissilva.whatsappclone.model.User;
 import com.example.luissilva.whatsappclone.presenter.PresenterUser;
 import com.example.luissilva.whatsappclone.utils.MessagesUtils;
@@ -15,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UserRegisterActivity extends AppCompatActivity {
@@ -26,8 +30,9 @@ public class UserRegisterActivity extends AppCompatActivity {
 
     private User mUser;
     private PresenterUser presenterUser;
-    private MessagesUtils messagesUtils;
     private FirebaseAuth mAuth;
+
+    private String mString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +66,25 @@ public class UserRegisterActivity extends AppCompatActivity {
                             presenterUser.registerUser(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    finish();
+                                    mAuth = DataBaseConfig.getAuthentication();
+                                    mAuth.signOut(); // unauthenticate user
+                                    finish(); // close activity
                                 }
                             });
+                        }else{
+                            try {
+                                throw task.getException();
+                            }catch (FirebaseAuthWeakPasswordException e){
+                                mString = "Digite uma senha mais forte, contento mais caracteres com letras e números";
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                mString = "O email informado não é válido";
+                            }catch (FirebaseAuthUserCollisionException e) {
+                                mString = "Esse email já está em uso, informe outro email";
+                            }catch (Exception e) {
+                                mString = "Erro ao cadastrar usuário";e.printStackTrace();
+                            }
                         }
+                        MessagesUtils.toastMsg(getBaseContext(),mString);
                     }
                 });
             }

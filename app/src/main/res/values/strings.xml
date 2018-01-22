@@ -20,4 +20,8 @@
     <string name="userPassword">Password</string>
     <string name="textRegister">Cadastrar</string>
     <string name="registration_success">Usuário registrado com sucesso</string>
+    <string name="loginError">Erro ao logar o Usuario.</string>
+    <string name="signOut">Sair</string>
+    <string name="action_settings">Configurações</string>
+    <string name="add_person">Adicionar</string>
 </resources>
