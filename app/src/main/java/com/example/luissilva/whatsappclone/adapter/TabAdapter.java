@@ -13,7 +13,7 @@ import com.example.luissilva.whatsappclone.fragment.TalksFragment;
 
 public class TabAdapter extends FragmentStatePagerAdapter {
 
-    String[] titlePages = {"TALKS","CONTACTS"};
+    String[] titlePages = {"CONVERSAS","CONTATOS"};
 
     public TabAdapter(FragmentManager fm) {
         super(fm);

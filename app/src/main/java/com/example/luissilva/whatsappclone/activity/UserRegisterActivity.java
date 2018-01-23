@@ -1,5 +1,6 @@
 package com.example.luissilva.whatsappclone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -40,8 +41,8 @@ public class UserRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_register);
 
         name = findViewById(R.id.edtName);
-        email    = findViewById(R.id.edtEmail);
-        pass     = findViewById(R.id.edtPassword);
+        email = findViewById(R.id.edtEmail);
+        pass = findViewById(R.id.edtPassword);
         btnRegister = findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +58,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                 presenterUser.registerUserAuth(mUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             // get user ID at Firebase
                             FirebaseUser firebaseUser = task.getResult().getUser();
                             mUser.setId(firebaseUser.getUid());
@@ -66,25 +67,26 @@ public class UserRegisterActivity extends AppCompatActivity {
                             presenterUser.registerUser(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    mAuth = DataBaseConfig.getAuthentication();
-                                    mAuth.signOut(); // unauthenticate user
-                                    finish(); // close activity
+                                    Intent intent = new Intent(UserRegisterActivity.this,LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             });
-                        }else{
+                        } else {
                             try {
                                 throw task.getException();
-                            }catch (FirebaseAuthWeakPasswordException e){
+                            } catch (FirebaseAuthWeakPasswordException e) {
                                 mString = "Digite uma senha mais forte, contento mais caracteres com letras e números";
                             } catch (FirebaseAuthInvalidCredentialsException e) {
                                 mString = "O email informado não é válido";
-                            }catch (FirebaseAuthUserCollisionException e) {
+                            } catch (FirebaseAuthUserCollisionException e) {
                                 mString = "Esse email já está em uso, informe outro email";
-                            }catch (Exception e) {
-                                mString = "Erro ao cadastrar usuário";e.printStackTrace();
+                            } catch (Exception e) {
+                                mString = "Erro ao cadastrar usuário";
+                                e.printStackTrace();
                             }
                         }
-                        MessagesUtils.toastMsg(getBaseContext(),mString);
+                        MessagesUtils.toastMsg(getBaseContext(), mString);
                     }
                 });
             }

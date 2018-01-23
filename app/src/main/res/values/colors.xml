@@ -4,4 +4,5 @@
     <color name="colorPrimary">#0b6156</color> <!-- action bar -->
     <color name="colorAccent">#3d958a</color>
     <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorPrimaryTeste">#5C397A</color>
 </resources>

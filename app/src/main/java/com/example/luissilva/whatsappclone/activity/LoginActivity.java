@@ -27,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassWord;
 
+    private PresenterUser presenterUser;
+    private User mUser;
+
     private TextView tvNoRegister;
     private Button btnRegister;
     private String mString;
@@ -42,15 +45,20 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnLogin);
         tvNoRegister = findViewById(R.id.tvNoRegister);
 
+        mUser = new User();
+        mUser.setEmail(edtEmail.getText().toString());
+        mUser.setPass(edtPassWord.getText().toString());
+        validateUserLogin(mUser);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PresenterUser presenterUser = new PresenterUser();
-                User mUser = new User();
+                presenterUser = new PresenterUser();
+/*                mUser = new User();
                 mUser.setEmail(edtEmail.getText().toString());
-                mUser.setPass(edtPassWord.getText().toString());
-                presenterUser.validateUserAuth(mUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mUser.setPass(edtPassWord.getText().toString());*/
+                validateUserLogin(mUser);
+                /*presenterUser.validateUserAuth(mUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
@@ -69,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                             MessagesUtils.toastMsg(getBaseContext(),mString);
                         }
                     }
-                });
+                });*/
             }
         });
 
@@ -79,6 +87,29 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this,UserRegisterActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+    }
+
+    public void validateUserLogin(User pUser){
+        presenterUser.validateUserAuth(pUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    try {
+                        throw task.getException();
+                    }catch (FirebaseAuthInvalidUserException e){
+                        mString = "O email informado ainda não possue cadastro no nosso sistema";
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        mString = "O email ou senha informado não é válido";
+                    }catch (Exception e) {
+                        mString = "Erro ao logar usuário";e.printStackTrace();
+                    }
+                    MessagesUtils.toastMsg(getBaseContext(),mString);
+                }
             }
         });
     }

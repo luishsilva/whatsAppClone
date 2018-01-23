@@ -1,6 +1,7 @@
 package com.example.luissilva.whatsappclone.presenter;
 
 import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
+import com.example.luissilva.whatsappclone.helper.Base64Custom;
 import com.example.luissilva.whatsappclone.model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,7 +28,7 @@ public class PresenterUser {
 
     public static Task<Void> registerUser(User pUser){
         DatabaseReference databaseReference = DataBaseConfig.getDataBaseReference();
-        return databaseReference.child("user").child(pUser.getId()).setValue(pUser);
+        return databaseReference.child("user").child(Base64Custom.encode(pUser.getEmail())).setValue(pUser);
     }
 
     public static Task<AuthResult> validateUserAuth(User pUser){
