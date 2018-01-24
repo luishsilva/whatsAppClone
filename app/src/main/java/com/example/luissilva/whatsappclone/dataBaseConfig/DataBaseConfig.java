@@ -23,8 +23,6 @@ public class DataBaseConfig {
     public static FirebaseAuth getAuthentication(){
         if (authentication == null){
             authentication = FirebaseAuth.getInstance();
-        }else{
-
         }
         return authentication;
     }
@@ -32,6 +30,10 @@ public class DataBaseConfig {
     public static void signOut(){
         authentication = FirebaseAuth.getInstance();
         authentication.signOut();
+    }
+
+    public static boolean checkUserAuthStatus(){
+        return authentication.getCurrentUser() != null ? true : false;
     }
 
 }

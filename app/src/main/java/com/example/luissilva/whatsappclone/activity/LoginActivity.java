@@ -48,17 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         mUser = new User();
         mUser.setEmail(edtEmail.getText().toString());
         mUser.setPass(edtPassWord.getText().toString());
-        validateUserLogin(mUser);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenterUser = new PresenterUser();
-/*                mUser = new User();
+                mUser = new User();
                 mUser.setEmail(edtEmail.getText().toString());
-                mUser.setPass(edtPassWord.getText().toString());*/
-                validateUserLogin(mUser);
-                /*presenterUser.validateUserAuth(mUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mUser.setPass(edtPassWord.getText().toString());
+                presenterUser.validateUserAuth(mUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
@@ -77,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                             MessagesUtils.toastMsg(getBaseContext(),mString);
                         }
                     }
-                });*/
+                });
             }
         });
 
@@ -91,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void validateUserLogin(User pUser){
+    /*public void validateUserLogin(User pUser){
         presenterUser.validateUserAuth(pUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -112,5 +110,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }

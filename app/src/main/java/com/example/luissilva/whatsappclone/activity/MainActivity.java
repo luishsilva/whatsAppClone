@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.luissilva.whatsappclone.R;
 import com.example.luissilva.whatsappclone.adapter.TabAdapter;
@@ -36,31 +37,34 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolBar);
 
         slidingTabLayout = findViewById(R.id.slidingTabLayout);
-        viewPager        = findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
 
         TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
         viewPager.setAdapter(tabAdapter);
 
         slidingTabLayout.setViewPager(viewPager);
         slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this,R.color.colorAccent));
+        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_main,menu);
+        menuInflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case R.id.action_sign_out :{
+        switch (item.getItemId()) {
+            case R.id.action_sign_out: {
                 DataBaseConfig.signOut();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                if (!DataBaseConfig.checkUserAuthStatus()) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+
             }
             default:
                 return super.onOptionsItemSelected(item);
