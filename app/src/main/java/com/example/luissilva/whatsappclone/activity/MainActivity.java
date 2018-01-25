@@ -1,21 +1,25 @@
 package com.example.luissilva.whatsappclone.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.luissilva.whatsappclone.R;
 import com.example.luissilva.whatsappclone.adapter.TabAdapter;
 import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
 import com.example.luissilva.whatsappclone.helper.SlidingTabLayout;
+import com.example.luissilva.whatsappclone.utils.StringUtils;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -56,6 +60,49 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_sign_out:{
+                DataBaseConfig.signOut();
+                if (!DataBaseConfig.checkUserAuthStatus()){
+                    Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+
+            case R.id.action_add:{
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                alertDialog.setTitle(StringUtils.getStringResourceId(this, R.string.add_person));
+                alertDialog.setMessage(StringUtils.getStringResourceId(this, R.string.email_user));
+                alertDialog.setCancelable(false);
+
+                EditText editText = new EditText(MainActivity.this);
+                editText.setPadding(10,10,10,10);
+                alertDialog.setView(editText);
+                alertDialog.show();
+
+                alertDialog.setPositiveButton(StringUtils.getStringResourceId(this, R.string.txtRegister), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                alertDialog.setNegativeButton(StringUtils.getStringResourceId(this, R.string.txtCancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.action_sign_out: {
@@ -64,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
-
+                break;
             }
             default:
                 return super.onOptionsItemSelected(item);
         }
 
-    }
+    }*/
 }
