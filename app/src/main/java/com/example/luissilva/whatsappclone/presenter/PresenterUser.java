@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 public class PresenterUser {
 
     private static FirebaseAuth mAuth;
+    private static String userId;
 
     public PresenterUser() {
     }
@@ -28,7 +29,11 @@ public class PresenterUser {
 
     public static Task<Void> registerUser(User pUser){
         DatabaseReference databaseReference = DataBaseConfig.getDataBaseReference();
-        return databaseReference.child("user").child(Base64Custom.encode(pUser.getEmail())).setValue(pUser);
+
+        userId = Base64Custom.encode(pUser.getEmail());
+
+        return databaseReference.child("users").child(userId).setValue(pUser);
+        //return databaseReference.child("user").child(pUser.getId()).setValue(pUser);
     }
 
     public static Task<AuthResult> validateUserAuth(User pUser){

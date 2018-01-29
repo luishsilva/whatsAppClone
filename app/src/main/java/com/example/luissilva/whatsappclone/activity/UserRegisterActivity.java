@@ -67,9 +67,25 @@ public class UserRegisterActivity extends AppCompatActivity {
                             presenterUser.registerUser(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    Intent intent = new Intent(UserRegisterActivity.this,LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    if(task.isSuccessful()) {
+                                        MessagesUtils.toastMsg(getBaseContext(), "Usuário cadastrado com sucesso!");
+                                        Intent intent = new Intent(UserRegisterActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        try {
+                                            throw task.getException();
+                                        } catch (FirebaseAuthWeakPasswordException e) {
+                                            mString = "Digite uma senha mais forte, contento mais caracteres com letras e números";
+                                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                                            mString = "O email informado não é válido";
+                                        } catch (FirebaseAuthUserCollisionException e) {
+                                            mString = "Esse email já está em uso, informe outro email";
+                                        } catch (Exception e) {
+                                            mString = "Erro ao cadastrar usuário";
+                                            e.printStackTrace();
+                                        }
+                                    }
                                 }
                             });
                         } else {

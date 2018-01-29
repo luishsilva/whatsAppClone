@@ -10,7 +10,7 @@ import android.util.Base64;
 public class Base64Custom {
 
     public static String encode(String string){
-        return Base64.encodeToString(string.getBytes(),Base64.DEFAULT).replace("\\n","\\r");
+        return Base64.encodeToString(string.getBytes(),Base64.DEFAULT).replaceAll("(\\n|\\r)","");
     }
 
     public static String decode(String string){

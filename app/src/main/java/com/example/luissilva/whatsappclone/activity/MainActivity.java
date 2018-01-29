@@ -18,7 +18,9 @@ import android.widget.Toast;
 import com.example.luissilva.whatsappclone.R;
 import com.example.luissilva.whatsappclone.adapter.TabAdapter;
 import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
+import com.example.luissilva.whatsappclone.helper.Base64Custom;
 import com.example.luissilva.whatsappclone.helper.SlidingTabLayout;
+import com.example.luissilva.whatsappclone.utils.MessagesUtils;
 import com.example.luissilva.whatsappclone.utils.StringUtils;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     private DatabaseReference referenceDataBase = FirebaseDatabase.getInstance().getReference();
+    private String userIdDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +79,20 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setMessage(StringUtils.getStringResourceId(this, R.string.email_user));
                 alertDialog.setCancelable(false);
 
-                EditText editText = new EditText(MainActivity.this);
+                final EditText editText = new EditText(MainActivity.this);
                 editText.setPadding(10,10,10,10);
                 alertDialog.setView(editText);
-                alertDialog.show();
 
                 alertDialog.setPositiveButton(StringUtils.getStringResourceId(this, R.string.txtRegister), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        String contactEmail = editText.getText().toString();
+                        if (contactEmail.isEmpty()){
+                            MessagesUtils.toastMsg(getBaseContext(),"Usuário não cadastrado");
+                        }else{
+                            userIdDatabase = Base64Custom.encode(contactEmail);
+                            MessagesUtils.toastMsg(getBaseContext(),userIdDatabase);
+                        }
                     }
                 });
 
@@ -94,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+                alertDialog.show();
                 break;
             }
         }
