@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.example.luissilva.whatsappclone.R;
 import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
+import com.example.luissilva.whatsappclone.helper.PreferencesHelper;
 import com.example.luissilva.whatsappclone.model.User;
 import com.example.luissilva.whatsappclone.presenter.PresenterUser;
 import com.example.luissilva.whatsappclone.utils.MessagesUtils;
@@ -68,6 +69,10 @@ public class UserRegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
+
+                                        PreferencesHelper preferencesHelper = new PreferencesHelper(UserRegisterActivity.this);
+                                        preferencesHelper.saveUserPreferences(mUser.getId());
+
                                         MessagesUtils.toastMsg(getBaseContext(), "Usuário cadastrado com sucesso!");
                                         Intent intent = new Intent(UserRegisterActivity.this, LoginActivity.class);
                                         startActivity(intent);

@@ -12,15 +12,13 @@ import java.util.HashMap;
 public class PreferencesHelper {
 
     private Context mContext;
+    private String SHARED_PREFERENCES_FILE_NAME = "whatsAppClone.preferences";
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mSharedEditor;
     private int MODE = 0;
 
     // Constants
-    private String SHARED_PREFERENCES_FILE_NAME = "whatsapp.preferences";
-    private String KEY_USER_NAME = "name";
-    private String KEY_USER_PHONE = "phone";
-    private String KEY_USER_TOKEN = "token";
+    private String KEY_USERID_DATABASE = "idUserLogged";
 
     public PreferencesHelper(Context pContext) {
         this.mContext = pContext;
@@ -29,18 +27,14 @@ public class PreferencesHelper {
 
     }
 
-    public void saveUserPreferences(String pName, String pPhoneNUmber, String pToken){
-        mSharedEditor.putString(KEY_USER_NAME,pName);
-        mSharedEditor.putString(KEY_USER_PHONE,pPhoneNUmber);
-        mSharedEditor.putString(KEY_USER_TOKEN,pToken);
+    public void saveUserPreferences(String pUserIdLogged){
+        mSharedEditor.putString(KEY_USERID_DATABASE,pUserIdLogged);
         mSharedEditor.commit();
     }
 
-    public HashMap<String,String> getUserData(){
-        HashMap<String, String> userData = new HashMap<>();
-        userData.put(KEY_USER_NAME, mSharedPreferences.getString(KEY_USER_NAME,null));
-        userData.put(KEY_USER_PHONE, mSharedPreferences.getString(KEY_USER_PHONE,null));
-        userData.put(KEY_USER_TOKEN, mSharedPreferences.getString(KEY_USER_TOKEN,null));
-        return userData;
+    public String getUserLogged(){
+        return mSharedPreferences.getString(KEY_USERID_DATABASE,null);
     }
+
+
 }

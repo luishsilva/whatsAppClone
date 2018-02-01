@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.luissilva.whatsappclone.R;
+import com.example.luissilva.whatsappclone.helper.Base64Custom;
+import com.example.luissilva.whatsappclone.helper.PreferencesHelper;
 import com.example.luissilva.whatsappclone.model.User;
 import com.example.luissilva.whatsappclone.presenter.PresenterUser;
 import com.example.luissilva.whatsappclone.utils.MessagesUtils;
@@ -60,6 +62,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+
+                            PreferencesHelper preferencesHelper = new PreferencesHelper(LoginActivity.this);
+                            preferencesHelper.saveUserPreferences(Base64Custom.encode(mUser.getEmail()));
+
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }else{

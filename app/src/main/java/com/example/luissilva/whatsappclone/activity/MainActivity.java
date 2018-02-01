@@ -3,7 +3,6 @@ package com.example.luissilva.whatsappclone.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -13,17 +12,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.luissilva.whatsappclone.R;
 import com.example.luissilva.whatsappclone.adapter.TabAdapter;
 import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
 import com.example.luissilva.whatsappclone.helper.Base64Custom;
+import com.example.luissilva.whatsappclone.helper.PreferencesHelper;
 import com.example.luissilva.whatsappclone.helper.SlidingTabLayout;
+import com.example.luissilva.whatsappclone.utils.Constants;
 import com.example.luissilva.whatsappclone.utils.MessagesUtils;
 import com.example.luissilva.whatsappclone.utils.StringUtils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
 
-    private DatabaseReference referenceDataBase = FirebaseDatabase.getInstance().getReference();
     private String userIdDatabase;
+    private DatabaseReference firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +90,31 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String contactEmail = editText.getText().toString();
                         if (contactEmail.isEmpty()){
-                            MessagesUtils.toastMsg(getBaseContext(),"Usuário não cadastrado");
+                            MessagesUtils.toastMsg(getBaseContext(),"Para fazer o cadastro preencha o Email.");
                         }else{
                             userIdDatabase = Base64Custom.encode(contactEmail);
+
+                            firebase = DataBaseConfig.getDataBaseReference().child(Constants.USERS_FIREBASE_CHILD).child(userIdDatabase);
+                            firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getValue() != null){
+
+                                        PreferencesHelper preferencesHelper = new PreferencesHelper(MainActivity.this);
+
+                                        firebase = DataBaseConfig.getDataBaseReference();
+                                        firebase = firebase.child(Constants.CONTACTS_FIREBASE_CHILD)
+                                                .child(preferencesHelper.getUserLogged())
+                                                .child(userIdDatabase);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
                             MessagesUtils.toastMsg(getBaseContext(),userIdDatabase);
                         }
                     }
