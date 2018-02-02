@@ -19,6 +19,8 @@ import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
 import com.example.luissilva.whatsappclone.helper.Base64Custom;
 import com.example.luissilva.whatsappclone.helper.PreferencesHelper;
 import com.example.luissilva.whatsappclone.helper.SlidingTabLayout;
+import com.example.luissilva.whatsappclone.model.Contact;
+import com.example.luissilva.whatsappclone.model.User;
 import com.example.luissilva.whatsappclone.utils.Constants;
 import com.example.luissilva.whatsappclone.utils.MessagesUtils;
 import com.example.luissilva.whatsappclone.utils.StringUtils;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
 
-    private String userIdDatabase;
+    String userIdContact;
     private DatabaseReference firebase;
 
     @Override
@@ -88,24 +90,34 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setPositiveButton(StringUtils.getStringResourceId(this, R.string.txtRegister), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String contactEmail = editText.getText().toString();
+                        final String contactEmail = editText.getText().toString();
                         if (contactEmail.isEmpty()){
                             MessagesUtils.toastMsg(getBaseContext(),"Para fazer o cadastro preencha o Email.");
                         }else{
-                            userIdDatabase = Base64Custom.encode(contactEmail);
+                            userIdContact = Base64Custom.encode(contactEmail);
 
-                            firebase = DataBaseConfig.getDataBaseReference().child(Constants.USERS_FIREBASE_CHILD).child(userIdDatabase);
+                            firebase = DataBaseConfig.getDataBaseReference().child(Constants.USERS_FIREBASE_NODE).child(userIdContact);
                             firebase.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    User user = dataSnapshot.getValue(User.class);
+
                                     if (dataSnapshot.getValue() != null){
 
                                         PreferencesHelper preferencesHelper = new PreferencesHelper(MainActivity.this);
 
                                         firebase = DataBaseConfig.getDataBaseReference();
-                                        firebase = firebase.child(Constants.CONTACTS_FIREBASE_CHILD)
-                                                .child(preferencesHelper.getUserLogged())
-                                                .child(userIdDatabase);
+                                        firebase =  firebase.child(Constants.CONTACTS_FIREBASE_NODE)
+                                                            .child(preferencesHelper.getUserLogged())
+                                                            .child(userIdContact);
+
+                                        Contact contact = new Contact();
+                                        contact.setUserIdentifier(userIdContact);
+                                        contact.setNome(user.getName());
+                                        contact.setEmail(user.getEmail());
+
+                                        firebase.setValue(contact);
                                     }
                                 }
 
@@ -115,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
 
-                            MessagesUtils.toastMsg(getBaseContext(),userIdDatabase);
+                            MessagesUtils.toastMsg(getBaseContext(),userIdContact);
                         }
                     }
                 });

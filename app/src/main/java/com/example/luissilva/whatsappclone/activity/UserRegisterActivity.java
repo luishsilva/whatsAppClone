@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.example.luissilva.whatsappclone.R;
 import com.example.luissilva.whatsappclone.dataBaseConfig.DataBaseConfig;
+import com.example.luissilva.whatsappclone.helper.Base64Custom;
 import com.example.luissilva.whatsappclone.helper.PreferencesHelper;
 import com.example.luissilva.whatsappclone.model.User;
 import com.example.luissilva.whatsappclone.presenter.PresenterUser;
@@ -60,9 +61,12 @@ public class UserRegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            final String userIdDatabase = Base64Custom.encode(mUser.getEmail());
+
                             // get user ID at Firebase
                             FirebaseUser firebaseUser = task.getResult().getUser();
-                            mUser.setId(firebaseUser.getUid());
+                            mUser.setId(userIdDatabase);
 
                             // register user on database
                             presenterUser.registerUser(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -71,7 +75,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                                     if(task.isSuccessful()) {
 
                                         PreferencesHelper preferencesHelper = new PreferencesHelper(UserRegisterActivity.this);
-                                        preferencesHelper.saveUserPreferences(mUser.getId());
+                                        preferencesHelper.saveUserPreferences(userIdDatabase);
 
                                         MessagesUtils.toastMsg(getBaseContext(), "Usuário cadastrado com sucesso!");
                                         Intent intent = new Intent(UserRegisterActivity.this, LoginActivity.class);

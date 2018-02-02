@@ -6,6 +6,6 @@ package com.example.luissilva.whatsappclone.utils;
 
 public class Constants {
 
-    public static String USERS_FIREBASE_CHILD = "usuarios";
-    public static String CONTACTS_FIREBASE_CHILD = "usuarios";
+    public static String USERS_FIREBASE_NODE = "users";
+    public static String CONTACTS_FIREBASE_NODE = "contact";
 }

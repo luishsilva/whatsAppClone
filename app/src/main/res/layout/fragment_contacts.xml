@@ -5,11 +5,13 @@
     tools:context="com.example.luissilva.whatsappclone.fragment.ContactsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Contacts layout"
-        android:layout_gravity="center"
-        android:textColor="@color/colorPrimary"/>
+    <ListView
+        android:id="@+id/list_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
+        android:layout_gravity="center_horizontal|top">
+    </ListView>
 
 </FrameLayout>
